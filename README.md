@@ -287,10 +287,10 @@ Released under the **MIT License** — free for personal and commercial use. See
 
 ## Author
 
-**[YOUR_NAME]**
+**Archit Dutta**
 
-- GitHub: [@[architdutta10-max]](https://github.com/[architdutta10-max])
-- LinkedIn: [Archit Dutta](https://linkedin.com/in/[archit-dutta-4522693aa])
+- GitHub: [@architdutta10-max](https://github.com/architdutta10-max)
+- LinkedIn: [Archit Dutta](https://www.linkedin.com/in/archit-dutta-4522693aa)
 
 Built as a portfolio project for **Google DevFest**.
 
