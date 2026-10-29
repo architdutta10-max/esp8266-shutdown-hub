@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Logs
+*.log
+*.log.1
+pc_activity.log*
+pc_events.log*
+pc_history.jsonl
+
+# Arduino build
+sketch_oct24a/
+build/
+*.bin
+*.elf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Audio (optional — remove this line if you want to commit the WAV)
+# mission_fixed.wav
