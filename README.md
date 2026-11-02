@@ -36,11 +36,11 @@ Built as a portfolio project for Google DevFest.
 
 ## How It Works
 
-```
-┌──────────┐   Wi-Fi    ┌───────────────┐  USB Serial  ┌──────────────┐
-│  Phone   │ ────────▶  │   ESP8266     │ ──────────▶  │  Target PC   │
-│ Browser  │  HTTP :80  │  192.168.4.1  │  115200 baud │  Listener    │
-└──────────┘            └───────────────┘              └──────────────┘
+```text
+┌──────────┐ Wi-Fi ┌───────────────┐ USB Serial ┌──────────────┐
+│ Phone │ ────────▶ │ ESP8266 │ ──────────▶ │ Target PC │
+│ Browser │ HTTP :80 │ 192.168.4.1 │ 115200 baud │ Listener │
+└──────────┘ └───────────────┘ └──────────────┘
 ```
 
 1. Phone connects to ESP's own Wi-Fi network `ShutdownHub`
@@ -89,14 +89,15 @@ pip install -r requirements.txt
 
 ### Step 1 — Flash the ESP8266
 
-1. Open `sketch_oct24a.ino` in Arduino IDE
-2. **Tools → Board → NodeMCU 1.0 (ESP-12E Module)**
-3. **Tools → Port → your COM port** (check Device Manager)
-4. Click **Upload**
+Open `sketch_oct24a.ino` in Arduino IDE
 
-Open **Tools → Serial Monitor** at **115200 baud**. You should see:
+- Tools → Board → NodeMCU 1.0 (ESP-12E Module)
+- Tools → Port → your COM port (check Device Manager)
+- Click Upload
 
-```
+Open Tools → Serial Monitor at 115200 baud. You should see:
+
+```text
 === CONTROL HUB BOOT ===
 AP started: YES
 AP SSID: ShutdownHub
@@ -116,7 +117,7 @@ python -u pc_listener.py
 
 You should see:
 
-```
+```text
 === CONTROL HUB PC LISTENER ===
 [HTTP] listening on :8000
 [SERIAL] opening COM8 ...
@@ -139,18 +140,18 @@ This writes `pc_activity.log` every 5 seconds. It's independent of the shutdown 
 
 On your phone:
 
-1. Connect to Wi-Fi **`ShutdownHub`** (password: **`shutdown123`**)
-2. Open **`http://192.168.4.1`**
-3. Enter PIN **`1234`** → tap **Unlock**
-4. Set a timer (e.g., 10 seconds) → tap **START**
+1. Connect to Wi-Fi `ShutdownHub` (password: `shutdown123`)
+2. Open `http://192.168.4.1`
+3. Enter PIN `1234` → tap Unlock
+4. Set a timer (e.g., 10 seconds) → tap START
 
-> Windows will warn "No internet connection" — tap **Yes** to stay connected. That's expected. The ESP's Wi-Fi has no internet by design.
+> Windows will warn "No internet connection" — tap Yes to stay connected. That's expected. The ESP's Wi-Fi has no internet by design.
 
 ---
 
 ## Configuration
 
-### `sketch_oct24a.ino`
+**`sketch_oct24a.ino`**
 
 ```cpp
 const char* ap_ssid      = "ShutdownHub";  // ESP's Wi-Fi name
@@ -158,20 +159,20 @@ const char* ap_password  = "shutdown123";  // ESP's Wi-Fi password
 const char* DASH_PIN     = "1234";         // Dashboard PIN — change this!
 ```
 
-### `pc_listener.py`
+**`pc_listener.py`**
 
 ```python
 SERIAL_PORT = 'COM8'                            # Your ESP's COM port
 AUDIO_FILE  = r"C:\path\to\mission_fixed.wav"  # Path to the theme audio
 ```
 
-**To find your ESP's COM port:** open Device Manager (Win + X → Device Manager) → expand **Ports (COM & LPT)** → look for `USB-SERIAL CH340 (COMx)` or `Silicon Labs CP210x (COMx)`.
+To find your ESP's COM port: open Device Manager (Win + X → Device Manager) → expand Ports (COM & LPT) → look for USB-SERIAL CH340 (COMx) or Silicon Labs CP210x (COMx).
 
 ---
 
 ## Project Structure
 
-```
+```text
 .
 ├── sketch_oct24a.ino      # ESP8266 firmware — flash to board
 ├── pc_listener.py         # PC-side serial listener + HTTP server
@@ -182,7 +183,7 @@ AUDIO_FILE  = r"C:\path\to\mission_fixed.wav"  # Path to the theme audio
 └── .gitignore             # Git ignore rules
 ```
 
-Runtime files that are generated on first run and **not committed** to Git:
+Runtime files that are generated on first run and not committed to Git:
 
 - `pc_events.log` — event log
 - `pc_history.jsonl` — JSON event history
@@ -194,27 +195,31 @@ Runtime files that are generated on first run and **not committed** to Git:
 ## Use Cases
 
 ### Home users
+
 - Shut down gaming PCs automatically after a session
 - Enforce kids' screen-time limits without paid apps
 - Stop overnight electricity waste
 
 ### Small business
+
 - Auto-shutdown of office PCs at closing time
 - Fixed session timers for cyber cafés and gaming lounges
 - End-of-day shutdown for co-working spaces
 
 ### Enterprise
+
 - Session limits on bank teller PCs
 - HIPAA-compliant timeout for healthcare workstations
 - Audit trail for compliance
 
 ### Security-conscious environments
-- **Dead-man switch** — PC auto-shuts down if the authorized phone leaves Wi-Fi range
-- **Session timeout** — classified or sensitive work limited to a fixed duration
-- **Emergency kill switch** — physical button (optional) triggers instant shutdown
-- **Air-gapped operation** — no internet dependency, suitable for isolated networks
 
-> This device performs a **legitimate OS shutdown** — it does not delete or corrupt data. For full data protection, combine with disk encryption (BitLocker, LUKS, FileVault).
+- Dead-man switch — PC auto-shuts down if the authorized phone leaves Wi-Fi range
+- Session timeout — classified or sensitive work limited to a fixed duration
+- Emergency kill switch — physical button (optional) triggers instant shutdown
+- Air-gapped operation — no internet dependency, suitable for isolated networks
+
+This device performs a legitimate OS shutdown — it does not delete or corrupt data. For full data protection, combine with disk encryption (BitLocker, LUKS, FileVault).
 
 ---
 
@@ -228,22 +233,25 @@ Runtime files that are generated on first run and **not committed** to Git:
 | TeamViewer subscription | ₹2,000/year | ❌ Manual only |
 | Cloud automation service | ₹500/month | ❌ Depends on internet |
 
-One PC left on 8 hours overnight wastes **₹15–20 per night** — that's **₹5,500+ per year**. This device pays for itself in under a month.
+One PC left on 8 hours overnight wastes ₹15–20 per night — that's ₹5,500+ per year. This device pays for itself in under a month.
 
 ---
 
 ## Known Limitations
 
-- ESP8266 supports **2.4 GHz Wi-Fi only** — cannot join 5 GHz networks
-- Timer is **not persisted** across ESP reboots (add EEPROM if needed)
-- `winsound` on Windows requires **PCM WAV** audio — convert with:
-  ```bash
-  ffmpeg -i input.mp3 -acodec pcm_s16le -ar 44100 -ac 2 mission_fixed.wav
-  ```
+- ESP8266 supports 2.4 GHz Wi-Fi only — cannot join 5 GHz networks
+- Timer is not persisted across ESP reboots (add EEPROM if needed)
+- `winsound` on Windows requires PCM WAV audio — convert with:
+
+```bash
+ffmpeg -i input.mp3 -acodec pcm_s16le -ar 44100 -ac 2 mission_fixed.wav
+```
+
 - Windows Firewall may block port 8000 — allow it with:
-  ```powershell
-  New-NetFirewallRule -DisplayName "Control Hub Listener" -Direction Inbound -LocalPort 8000 -Protocol TCP -Action Allow -Profile Any
-  ```
+
+```powershell
+New-NetFirewallRule -DisplayName "Control Hub Listener" -Direction Inbound -LocalPort 8000 -Protocol TCP -Action Allow -Profile Any
+```
 
 ---
 
@@ -281,21 +289,15 @@ Pull requests are welcome. For major changes, please open an issue first.
 
 ## License
 
-Released under the **MIT License** — free for personal and commercial use. See [LICENSE](LICENSE) for the full text.
+Released under the MIT License — free for personal and commercial use. See [LICENSE](LICENSE) for the full text.
 
 ---
 
 ## Author
 
-**Archit Dutta**
+**Archit Dutta** · Siliguri, West Bengal, India
 
-- GitHub: [@architdutta10-max](https://github.com/architdutta10-max)
-- LinkedIn: [Archit Dutta](https://www.linkedin.com/in/archit-dutta-4522693aa)
-
-Built as a portfolio project for **Google DevFest**.
-
----
-
-## Support
-
-If this project helped you, gave you an idea, or saved you some electricity bill money — consider giving it a ⭐ on GitHub. It helps others find the project.
+- 💼 **LinkedIn:** [in/archit-dutta-4522693aa](https://www.linkedin.com/in/archit-dutta-4522693aa/)
+- 📸 **Instagram:** [@architdutta17](https://www.instagram.com/architdutta17/)
+- 🐙 **GitHub:** [@architdutta10-max](https://github.com/architdutta10-max)
+- ✉️ **Email:** architdutta10@gmail.com
